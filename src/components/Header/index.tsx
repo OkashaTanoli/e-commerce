@@ -7,6 +7,7 @@ import { RxCross2 } from 'react-icons/rx'
 import { CgShoppingCart, CgMenuRightAlt } from 'react-icons/cg'
 import { Arimo } from 'next/font/google';
 import { useState } from 'react';
+import Link from 'next/link';
 
 const arimo = Arimo({
     weight: ['400', '500', '600', '700'],
@@ -42,10 +43,10 @@ function Header() {
                         <CartButton />
                     </div>
                     <ul className='flex flex-col gap-4 text-center'>
-                        <li>Female</li>
-                        <li>Male</li>
-                        <li>Kids</li>
-                        <li>All Products</li>
+                        <Link href={'/category/female'}><li>Female</li></Link>
+                        <Link href={'/category/male'}><li>Male</li></Link>
+                        <Link href={'/category/kids'}><li>Kids</li></Link>
+                        <Link href={'/category/all'}><li>All Products</li></Link>
                     </ul>
                 </div>
             </div>
@@ -53,10 +54,10 @@ function Header() {
                 <div className='w-[90%] xl:w-[1350px] mx-auto h-[105px] flex justify-between items-center'>
                     <Image src={Logo} alt='logo' className='w-[140px] h-[25px]' />
                     <ul className='hidden lg:flex gap-12'>
-                        <li>Female</li>
-                        <li>Male</li>
-                        <li>Kids</li>
-                        <li>All Products</li>
+                        <Link href={'/category/female'}><li>Female</li></Link>
+                        <Link href={'/category/male'}><li>Male</li></Link>
+                        <Link href={'/category/kids'}><li>Kids</li></Link>
+                        <Link href={'/category/all'}><li>All Products</li></Link>
                     </ul>
                     <div className='hidden lg:flex items-center border rounded-md w-[30%]'>
                         <div className='w-[27px] flex justify-center items-center'>

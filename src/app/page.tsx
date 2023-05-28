@@ -1,12 +1,14 @@
-import { Hero, Products, Promotions } from '@/components'
+import { Hero, Products, Promotions, Subscribe, UniqueJewellery } from '@/components'
 import Image from 'next/image'
 
-export default function Home() {
+export default async function Home() {
     return (
         <div>
             <Hero />
             <Promotions />
             <Products />
+            <UniqueJewellery />
+            <Subscribe />
         </div>
     )
 }
