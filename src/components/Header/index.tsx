@@ -57,7 +57,7 @@ function Header() {
                         <Link href={'/category/female'}><li>Female</li></Link>
                         <Link href={'/category/male'}><li>Male</li></Link>
                         <Link href={'/category/kids'}><li>Kids</li></Link>
-                        <Link href={'/category/all'}><li>All Products</li></Link>
+                        <Link href={'/category/products'}><li>All Products</li></Link>
                     </ul>
                     <div className='hidden lg:flex items-center border rounded-md w-[30%]'>
                         <div className='w-[27px] flex justify-center items-center'>

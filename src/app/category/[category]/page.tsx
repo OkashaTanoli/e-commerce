@@ -1,23 +1,59 @@
+import Image from "next/image";
 import { client } from "../../../../sanity/lib/client";
+import { Image as SanityImage } from 'sanity';
+import { urlForImage } from "../../../../sanity/lib/image";
+import Link from "next/link";
 
+interface IData {
+    images: SanityImage[],
+    price: number,
+    title: string,
+    type: string,
+    slug: {
+        current: string
+    }
+}
 
 
 const getData = async (category: string) => {
-    const response = await client.fetch(`*[_type == "products" && category == "${category}"]{images, price, title, type}`)
+    const response = await client.fetch(`*[_type == "products"${category !== 'products' ? `&& category == "${category}"` : ''}]{images, price, title, type, slug}`)
     return response
 }
 
+
 async function Category({ params }: { params: { category: string } }) {
-    const data = await getData(params.category)
+    const data: IData[] = await getData(params.category)
     console.log(data)
     return (
         <div className="mt-20">
             <div className="w-[90%] xl:w-[1350px] mx-auto">
-                <div className="grid grid-cols-4 gap-10">
-                    <div>
-                        
-                    </div>
-                </div>
+                {
+                    !data.length ?
+                        <div className="h-[40vh] flex justify-center items-center">
+                            <h1 className="text-xl text-main_dark font-bold capitalize">{params.category} products are not available</h1>
+                        </div>
+                        :
+                        <div className="grid grid-cols-4 gap-14">
+                            {
+                                data.map((val: IData, index: number) => {
+                                    return (
+                                        <Link key={index} href={`/product/${val.slug.current}`}>
+                                            <div className="cursor-pointer">
+                                                <div className="h-[300px] flex justify-center bg-light_gray">
+                                                    <Image src={urlForImage(val.images[0]).url()} alt="image" width={1000} height={1000} className="h-full w-auto object-cover" />
+                                                </div>
+                                                <div className="mt-5 flex flex-col gap-1">
+                                                    <h1 className='text-main_dark text-[17px] font-semibold'>{val.title}</h1>
+                                                    <h1 className="text-[15px] font-semibold text-[#888]">{val.type}</h1>
+                                                    <h1 className='text-main_dark text-[19px] font-bold'>$ {val.price}</h1>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    )
+                                })
+                            }
+                        </div>
+                }
             </div>
         </div>
     );

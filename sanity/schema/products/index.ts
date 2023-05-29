@@ -22,11 +22,11 @@ export const products = {
             type: 'string',
             options: {
                 list: [
-                    { title: 'Sweater', value: 'sweater' },
-                    { title: 'Dress', value: 'dress' },
-                    { title: 'Pants', value: 'pants' },
-                    { title: 'Jackets', value: 'jackets' },
-                    { title: 'T Shirts', value: 't-shirts' },
+                    { title: 'Sweater', value: 'Sweater' },
+                    { title: 'Dress', value: 'Dress' },
+                    { title: 'Pants', value: 'Pants' },
+                    { title: 'Jackets', value: 'Jackets' },
+                    { title: 'T Shirts', value: 'T Shirts' },
                 ],
             },
             validation: (Rule: any) => Rule.required()
