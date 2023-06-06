@@ -10,7 +10,7 @@ const endpointSecret = process.env.ENDPOINT_SECRET!;
 // export const config = { api: { bodyParser: false } }
 
 export async function POST(request: NextRequest) {
-    // console.log("hello man")
+    console.log("hello man")
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2022-11-15' })
 
     const sig = request.headers.get('stripe-signature')!;
