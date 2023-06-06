@@ -5,6 +5,9 @@ import DoubleHeading from "./DoubleHeading";
 import Products from "./Home/Products";
 import UniqueJewellery from "./Home/UniqueJewellery";
 import Subscribe from "./Home/Subscribe";
+import ImageSection from "./Product/ImagesSection";
+import DetailsSection from "./Product/DetailsSection";
+import Loader from "./Loader";
 
 export {
     Header,
@@ -13,5 +16,8 @@ export {
     DoubleHeading,
     Products,
     UniqueJewellery,
-    Subscribe
+    Subscribe,
+    ImageSection,
+    DetailsSection,
+    Loader
 }

@@ -15,16 +15,18 @@ module.exports = {
       colors: {
         main_dark: '#212121',
         light_pink: '#FFECE3',
-        light_gray:'#D6D6D8'
+        light_gray: '#D6D6D8'
       }
     },
     screens: {
-      sm: "320px",
-      mm: "375px",
-      ml: "425px",
-      md: "768px",
-      lg: "1024px",
-      xl: "1440px",
+      "sm": "320px",
+      "mm": "375px",
+      "ml": "425px",
+      "md": "768px",
+      "md-lg":"900px",
+      "lg": "1024px",
+      "lg-xl": "1200px",
+      "xl": "1440px",
       "2xl": "2560px",
     },
   },

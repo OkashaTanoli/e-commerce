@@ -3,3 +3,10 @@
 @tailwind utilities;
 
 
+
+.red_shadow{
+    text-shadow: 0 0 4px red;
+}
+.green_shadow{
+    text-shadow: 0 0 4px green;
+}

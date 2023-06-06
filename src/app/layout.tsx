@@ -2,6 +2,7 @@ import { Header } from '@/components'
 import './globals.css'
 import { Sora } from 'next/font/google'
 import Footer from '@/components/Footer'
+import { CreateContext } from '@/store/context'
 
 const sora = Sora({
     weight: ['100', '200', '300', '400', '500', '600', '700', '800'],
@@ -19,22 +20,24 @@ export default function RootLayout({
 }: {
     children: any
 }) {
-    console.log(children.props.childProp.segment)
+    // console.log(children.props.childProp.segment)
     return (
         <html lang="en">
             <body className={sora.className}>
-                {
-                    !['studio'].includes(children.props.childProp.segment) ?
-                        <div className='flex flex-col'>
-                            < Header />
-                            {children}
-                            <Footer />
-                        </div>
-                        :
-                        <>
-                            {children}
-                        </>
-                }
+                <CreateContext>
+                    {
+                        !['studio'].includes(children.props?.childProp?.segment) ?
+                            <div className='flex flex-col'>
+                                < Header />
+                                {children}
+                                <Footer />
+                            </div>
+                            :
+                            <>
+                                {children}
+                            </>
+                    }
+                </CreateContext>
 
             </body>
         </html>

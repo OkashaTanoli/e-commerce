@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { client } from "../../../../sanity/lib/client";
+import { client } from "../../../sanity/lib/client";
 import { Image as SanityImage } from 'sanity';
-import { urlForImage } from "../../../../sanity/lib/image";
+import { urlForImage } from "../../../sanity/lib/image";
 import Link from "next/link";
 
 interface IData {
@@ -15,14 +15,14 @@ interface IData {
 }
 
 
-const getData = async (category: string) => {
-    const response = await client.fetch(`*[_type == "products"${category !== 'products' ? `&& category == "${category}"` : ''}]{images, price, title, type, slug}`)
+const getData = async (searchText: string) => {
+    const response = await client.fetch(`*[_type == 'products' && (title match "${searchText}" || type match "${searchText}")]{images, price, title, type, slug}`)
     return response
 }
 
 
-async function Category({ params }: { params: { category: string } }) {
-    const data: IData[] = await getData(params.category)
+async function Category({ params, searchParams }: { params: any, searchParams: { s: string } }) {
+    const data: IData[] = await getData(searchParams.s)
     // console.log(data)
     return (
         <div className="mt-20">
@@ -30,7 +30,7 @@ async function Category({ params }: { params: { category: string } }) {
                 {
                     !data.length ?
                         <div className="h-[40vh] flex justify-center items-center">
-                            <h1 className="text-xl text-main_dark font-bold capitalize">{params.category} products are not available</h1>
+                            <h1 className="text-xl text-main_dark font-bold capitalize">No products were found matching your search.</h1>
                         </div>
                         :
                         <div className="grid grid-cols-1 md:grid-cols-2 md-lg:grid-cols-3 lg-xl:grid-cols-4 gap-14">

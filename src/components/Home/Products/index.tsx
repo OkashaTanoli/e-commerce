@@ -13,7 +13,7 @@ interface IData {
 
 export default (async function Products() {
     const data: IData[] = await client.fetch(`*[_type == 'products']{images, price, title}[0..2]`)
-    console.log(data)
+    // console.log(data)
     return (
         <div className='mt-28'>
             <div className='w-[90%] xl:w-[1350px] mx-auto'>
