@@ -12,7 +12,6 @@ const endpointSecret = process.env.ENDPOINT_SECRET!;
 export async function POST(request: NextRequest) {
     // console.log("hello man")
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2022-11-15' })
-
     const sig = request.headers.get('stripe-signature')!;
     // console.log(sig)
     const data = await request.text()
