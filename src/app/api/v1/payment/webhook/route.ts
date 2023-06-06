@@ -4,7 +4,7 @@ import Stripe from "stripe";
 
 
 // const endpointSecret = "whsec_BDAkEBaBl0cUYXfigkzFMwsqO4zBkV1g";
-const endpointSecret = "whsec_4f14af6e4fb267bf7eed082ff3bca7ed5efb7df5ec120a155ef2781de798a549";
+const endpointSecret = process.env.ENDPOINT_SECRET!;
 
 
 // export const config = { api: { bodyParser: false } }
