@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
             console.log(orders)
         }
         catch (err) {
-            console.log(err)
+            console.log("error ========>>>>>>>>>", err)
         }
     }
     return NextResponse.json({ message: "done" })
