@@ -14,12 +14,12 @@ export async function POST(request: NextRequest) {
     const sig = request.headers.get('stripe-signature')!;
     const data = await request.text()
     let event;
-    try {
-        event = stripe.webhooks.constructEvent(data, sig, endpointSecret);
-    } catch (err: any) {
-        console.log("ERROR================>>>>>>>>>>", err)
-        return NextResponse.json(`Webhook Error =======>>>>>>>>>> : ${err.message}`)
-    }
+    // try {
+    event = stripe.webhooks.constructEvent(data, sig, endpointSecret);
+    // } catch (err: any) {
+    //     console.log("ERROR================>>>>>>>>>>", err)
+    //     return NextResponse.json(`Webhook Error =======>>>>>>>>>> : ${err.message}`)
+    // }
 
     if (event.type === 'checkout.session.completed') {
         try {
