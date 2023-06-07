@@ -56,8 +56,10 @@ function Cart() {
             }
         });
         const data = await res.json()
-        // stripe.redirectToCheckout({ sessionId: data.session.id });
-        window.location.assign(data.url)
+        console.log(data)
+        if (data.url) {
+            window.location.assign(data.url)
+        }
         setLoading(false)
     }
 
@@ -80,7 +82,7 @@ function Cart() {
                                             return (
                                                 <div key={index} className='py-10 border-b flex flex-col md:flex-row gap-7 justify-between'>
                                                     <div className='overflow-hidden flex-shrink-0 flex justify-center'>
-                                                        <Image src={urlForImage(item.image).url()} alt='img' width={1000} height={1000} className='w-[180px] h-[200px] rounded-lg object-cover' />
+                                                        <Image src={item.image} alt='img' width={1000} height={1000} className='w-[180px] h-[200px] rounded-lg object-cover' />
                                                     </div>
                                                     <div className='flex-grow flex flex-col justify-between gap-3 md:gap-0'>
                                                         <div className='flex justify-between gap-5'>

@@ -9,19 +9,17 @@ export async function POST(request: NextRequest) {
     try {
         const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2022-11-15' })
         const data: { cartItems: ICartItem[] } = await request.json()
-        console.log(data.cartItems)
         const cartDataForCheckOut = data.cartItems.map((item: ICartItem) => {
-            const image = urlForImage(item.image).url()
             return {
                 price_data: {
                     currency: "usd",
                     product_data: {
                         name: item.title,
-                        images: [image],
+                        images: [item.image],
                         description: `Size: ${item.size.toUpperCase()}`,
                         metadata: {
                             _id: item._id,
-                            image: image,
+                            image: item.image,
                             productId: item.productId,
                             quantity: item.quantity,
                             size: item.size,
@@ -32,18 +30,29 @@ export async function POST(request: NextRequest) {
                     unit_amount: item.price * 100, //*100 because unit amounts has to be in cents
                 },
                 quantity: item.quantity
-
-                // size: 'XL'
             };
+        });
+        let metadata = {
+
+        }
+        for (let i = 0; i < data.cartItems.length; i++) {
+            metadata = {
+                ...metadata,
+                [`a${i}`]: JSON.stringify(data.cartItems[i])
+            }
+        }
+        const customer = await stripe.customers.create({
+            metadata
         });
         const session = await stripe.checkout.sessions.create({
             line_items: cartDataForCheckOut,
             mode: 'payment',
             payment_method_types: ["card"],
             billing_address_collection: "auto",
-            metadata: {
-                data: JSON.stringify(data.cartItems)
-            },
+            customer: customer.id,
+            // metadata: {
+            //     cart: JSON.stringify(data.cartItems)
+            // },
             shipping_address_collection: {
                 allowed_countries: ['PK'],
             },
@@ -94,8 +103,9 @@ export async function POST(request: NextRequest) {
         })
         return NextResponse.json({ url: session.url })
     }
-    catch {
-        return NextResponse.json({ message: "error" })
+    catch (err) {
+        console.log(err)
+        return NextResponse.json({ message: "error", err })
     }
 
 }

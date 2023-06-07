@@ -7,6 +7,7 @@ import { IAllProductsData, ICartItem, IContext } from '../../../../types/Product
 import { CgShoppingCart } from 'react-icons/cg';
 import { ContextApi } from '@/store/context';
 import toast, { Toaster } from 'react-hot-toast';
+import { urlForImage } from '../../../../sanity/lib/image';
 
 
 
@@ -41,7 +42,7 @@ function DetailsSection({ data }: { data: IAllProductsData }) {
             productId: data._id,
             title: data.title,
             price: data.price,
-            image: data.images[0],
+            image: urlForImage(data.images[0]).url(),
             size: selectedSize,
             type: data.type,
             quantity: quantity

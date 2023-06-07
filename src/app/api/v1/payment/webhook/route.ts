@@ -1,19 +1,17 @@
+import { db } from "@/lib/drizzle";
+import { Orders, Order, NewOrder } from "@/lib/schemas/order";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-// import { buffer } from 'micro'
+import { v4 as uuidv4 } from 'uuid';
 
 
-// const endpointSecret = "whsec_BDAkEBaBl0cUYXfigkzFMwsqO4zBkV1g";
 const endpointSecret = process.env.ENDPOINT_SECRET!;
 
 
-// export const config = { api: { bodyParser: false } }
 
 export async function POST(request: NextRequest) {
-    // console.log("hello man")
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2022-11-15' })
     const sig = request.headers.get('stripe-signature')!;
-    // console.log(sig)
     const data = await request.text()
     let event;
     try {
@@ -24,8 +22,26 @@ export async function POST(request: NextRequest) {
     }
 
     if (event.type === 'checkout.session.completed') {
-        const paymentIntentSucceeded = event.data.object;
-        console.log(paymentIntentSucceeded)
+        try {
+
+            const data: any = event.data.object;
+            const customer: any = await stripe.customers.retrieve(data.customer)
+            // const listLineItems = await stripe.checkout.sessions.listLineItems(data.id)
+            let newOrder: NewOrder = {
+                id: uuidv4(),
+                subtotal: data.amount_subtotal,
+                total: data.amount_total,
+                payment_intent_id: data.payment_intent,
+                payment_status: data.payment_status,
+                products: JSON.stringify(Object.values(customer.metadata).map((val: any) => JSON.parse(val))),
+                shipping: JSON.stringify(data.customer_details),
+            }
+            const orders = await db.insert(Orders).values(newOrder).returning();
+            console.log(orders)
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
     return NextResponse.json({ message: "done" })
 }

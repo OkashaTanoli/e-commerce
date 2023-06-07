@@ -16,7 +16,7 @@ export interface IAllProductsData {
 export interface ICartItem {
     _id: string,
     productId: string,
-    image: SanityImage,
+    image: string,
     price: number,
     title: string,
     type: string,
