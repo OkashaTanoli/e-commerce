@@ -13,13 +13,13 @@ export async function POST(request: NextRequest) {
     console.log(process.env.STRIPE_SECRET_KEY)
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2022-11-15' })
     const sig = request.headers.get('stripe-signature')!;
-    const data = await request
+    const data = await request.text()
     console.log("Signature ==================== >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", sig)
     // console.log("Data ==================== >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", JSON.stringify(data))
     console.log("EndPoint ==================== >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", endpointSecret)
     let event;
     try {
-        event = stripe.webhooks.constructEvent(JSON.stringify(data), sig, endpointSecret);
+        event = stripe.webhooks.constructEvent(data, sig, endpointSecret);
     } catch (err: any) {
         console.log("ERROR================>>>>>>>>>>", err)
         return NextResponse.json(`Webhook Error =======>>>>>>>>>> : ${err.message}`)
