@@ -13,9 +13,9 @@ export async function POST(request: NextRequest) {
     console.log(process.env.STRIPE_SECRET_KEY)
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2022-11-15' })
     const sig = request.headers.get('stripe-signature')!;
-    const data = await request.json()
+    const data = await request
     console.log("Signature ==================== >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", sig)
-    console.log("Data ==================== >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", JSON.stringify(data))
+    // console.log("Data ==================== >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", JSON.stringify(data))
     console.log("EndPoint ==================== >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", endpointSecret)
     let event;
     try {
