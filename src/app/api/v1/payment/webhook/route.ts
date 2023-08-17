@@ -1,5 +1,6 @@
 import { db } from "@/lib/drizzle";
 import { Orders, Order, NewOrder } from "@/lib/schemas/order";
+import { Test } from "@/lib/schemas/test";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { v4 as uuidv4 } from 'uuid';
@@ -12,14 +13,16 @@ const endpointSecret = process.env.ENDPOINT_SECRET!;
 export async function POST(request: NextRequest) {
     console.log(process.env.STRIPE_SECRET_KEY)
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2022-11-15' })
-    const sig = request.headers.get('stripe-signature')!;
+    const sig = request.headers.get('stripe-signature') || 'unknown';
     const data = await request.text()
     console.log("Signature ==================== >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", sig)
+    await db.insert(Test).values({ name: sig })
     // console.log("Data ==================== >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", JSON.stringify(data))
     console.log("EndPoint ==================== >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", endpointSecret)
     let event;
     try {
         event = stripe.webhooks.constructEvent(data, sig, endpointSecret);
+        console.log("SUCCESSSSSSSSSSSSSS================>>>>>>>>>>")
     } catch (err: any) {
         console.log("ERROR================>>>>>>>>>>", err)
         return NextResponse.json(`Webhook Error =======>>>>>>>>>> : ${err.message}`)

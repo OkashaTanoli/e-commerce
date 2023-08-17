@@ -1,14 +1,8 @@
 import {
     pgTable,
-    serial,
     text,
     timestamp,
-    varchar,
-    uniqueIndex,
-    date,
-    numeric,
     integer,
-    index,
     jsonb,
 } from "drizzle-orm/pg-core";
 

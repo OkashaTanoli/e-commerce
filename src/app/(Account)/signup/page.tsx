@@ -7,7 +7,6 @@ import { Toaster, toast } from 'react-hot-toast';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 
-
 function SignUp() {
 
 
