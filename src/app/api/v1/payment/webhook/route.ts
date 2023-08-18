@@ -14,8 +14,8 @@ export async function POST(request: NextRequest) {
     console.log(process.env.STRIPE_SECRET_KEY)
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2022-11-15' })
     const sig = request.headers.get('stripe-signature') || 'unknown';
-    await db.insert(Test).values({ name: `signature ===== >>>>>>>> ${sig} ,,,,,,,,,,,,, endpointSecret ======== >>>>>> ${endpointSecret}` })
     const data = await request.text()
+    await db.insert(Test).values({ name: `signature ===== >>>>>>>> ${sig} ,,,,,,,,,,,,, data ======== >>>>>> ${data}` })
     console.log("Signature ==================== >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", sig)
     // console.log("Data ==================== >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", JSON.stringify(data))
     console.log("EndPoint ==================== >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", endpointSecret)
@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
         console.log("SUCCESSSSSSSSSSSSSS================>>>>>>>>>>")
     } catch (err: any) {
         console.log("ERROR================>>>>>>>>>>", err)
-        return NextResponse.json({ message: `Webhook Error =======>>>>>>>>>> : ${err.message}` }, { status: 500 })
+        return NextResponse.json({ messahe: `Webhook Error =======>>>>>>>>>> : ${err.message}` }, { status: 500 })
     }
 
     if (event.type === 'checkout.session.completed') {
