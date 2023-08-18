@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     const sig = request.headers.get('stripe-signature') || 'unknown';
     const data = await request.text()
     console.log("Signature ==================== >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", sig)
-    await db.insert(Test).values({ name: sig })
+    await db.insert(Test).values({ name: `signature ===== >>>>>>>> ${sig} ,,,,,,,,,,,,, endpointSecret ======== >>>>>> ${endpointSecret}` })
     // console.log("Data ==================== >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", JSON.stringify(data))
     console.log("EndPoint ==================== >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", endpointSecret)
     let event;
